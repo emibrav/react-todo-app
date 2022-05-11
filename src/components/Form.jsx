@@ -1,11 +1,11 @@
 import Swal from 'sweetalert2'
 import { useFormulario } from "../hooks/useFormulario";
 
-const Form = ({agregarTodo}) => {
+const Form = ({agregarTodo, cleanTodos}) => {
 
   const initialState = {
-    nombre: 'holanda',
-    descripcion: 'asdasd',
+    nombre: '',
+    descripcion: '',
     estado: 'pendiente',
     prioridad: false
   }
@@ -19,7 +19,7 @@ const Form = ({agregarTodo}) => {
     if(!nombre.trim()) {
       e.target[0].focus()
       Swal.fire({
-        title: 'Error!',
+        title: 'Ponele nombre a la tarea!',
         text: 'La tarea debe tener un nombre',
         icon: 'error',
         confirmButtonText: 'Bueno culiau'
@@ -44,9 +44,14 @@ const Form = ({agregarTodo}) => {
       prioridad: prioridad,
       id: Date.now()
     })
+
     reset(initialState);
     e.target[0].focus()
   }
+
+  // cleanTodos(
+  //   reset(initialState)
+  // )
 
   // const handleChange = e => {
   //   const {name, value, checked, type} = e.target
@@ -59,19 +64,20 @@ const Form = ({agregarTodo}) => {
 
   return (
     <>
-      <h3>Agregar to-do</h3>
+      <h3>Agregar tarea</h3>
       <form onSubmit={handleSubmit}>
         <input 
           name="nombre"
           className="form-control mb-2"
-          placeholder="ingrese tarea..."
+          placeholder="Ingrese tarea..."
           type="text"
           value={nombre}
           onChange={handleChange}
         />
         <textarea 
           name="descripcion"
-          className="form-control mb-2" 
+          className="form-control mb-2"
+          placeholder="Descripción..."
           value={descripcion}
           onChange={handleChange}
 
@@ -99,8 +105,11 @@ const Form = ({agregarTodo}) => {
             Dar prioridad
           </label>
         </div>
-        <button type="subtmi" className="btn btn-primary">Agregar</button>
+        <button type="submit" className="btn btn-primary">Agregar</button>
       </form>
+      <div>
+        <button className="btn btn-danger mt-2" onClick={cleanTodos}>Eliminar todo</button>
+      </div>
     </>
   )
 }

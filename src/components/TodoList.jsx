@@ -4,7 +4,7 @@ import Todo from "./Todo"
 
 const TodoList = () => {
 
-  const [todos, setTodos] = useState([])
+  let [todos, setTodos] = useState([]);
 
   useEffect(() => {
     if(localStorage.getItem('todos')) {
@@ -16,9 +16,18 @@ const TodoList = () => {
     localStorage.setItem('todos', JSON.stringify(todos))
   }, [todos]);
 
+  useEffect(() => {
+    const pendingTodos = todos.filter(item =>  !item.estado)
+    const priorityTodos = todos.filter(item => item.prioridad)
+    if (pendingTodos.length === 0) {
+      document.title = "App de tareas"
+    } else {
+      document.title = `${pendingTodos.length} tareas pendientes | ${priorityTodos.length} prioritarios`
+    }
+  })
+
   const agregarTodo = (todo) => {
-    // console.log(todo)
-    setTodos((old) => [...old, todo])
+    setTodos((previousState) => [...previousState, todo])
   }
 
   const eliminarTodo = (id) => {
@@ -32,10 +41,14 @@ const TodoList = () => {
     setTodos(filtrarTodos)
   }
 
+  const cleanTodos = () => {
+    setTodos(todos = [])
+  }
+
   return (
     <div className="container mb-2 p-2">
       <div className="d-flex flex-column">
-        <Form agregarTodo={agregarTodo} />
+        <Form agregarTodo={agregarTodo} cleanTodos={cleanTodos}/>
         <ul className="list-group list-group-numbered mt-3">
           {
             todos.map((item) => (

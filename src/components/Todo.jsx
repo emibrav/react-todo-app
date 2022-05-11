@@ -13,7 +13,6 @@ const Todo = ({todo, eliminarTodo, editarTodo}) => {
         <div>
           <button className="btn btn-danger me-2" onClick={() => eliminarTodo(id)}>🧺</button>
           <button className="btn btn-warning" onClick={() => editarTodo(id)}>✅</button>
-          <button className="btn btn-primary ms-2">🖊</button>
         </div>
       </li>
     </>
