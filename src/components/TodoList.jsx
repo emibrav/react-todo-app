@@ -4,7 +4,7 @@ import Todo from "./Todo"
 
 const TodoList = () => {
 
-  let [todos, setTodos] = useState([]);
+  const [todos, setTodos] = useState([]);
 
   useEffect(() => {
     if(localStorage.getItem('todos')) {
@@ -42,7 +42,7 @@ const TodoList = () => {
   }
 
   const cleanTodos = () => {
-    setTodos(todos = [])
+    setTodos(setTodos([]))
   }
 
   return (
